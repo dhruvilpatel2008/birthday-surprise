@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Hetal 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family:Poppins, sans-serif;
+    background: url('your-friend-photo.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+
+    animation: bgZoom 40s ease-in-out infinite alternate;
+}
+
+/* Soft zoom background */
+@keyframes bgZoom{
+    from{background-size:100%;}
+    to{background-size:110%;}
+}
+
+/* Moving pastel overlay */
+body::after{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        rgba(255,182,193,0.25),
+        rgba(255,105,180,0.15),
+        rgba(255,192,203,0.25)
+    );
+    background-size:200% 200%;
+    animation: gradientMove 18s ease infinite;
+    z-index:-1;
+}
+
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Vignette depth */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    box-shadow: inset 0 0 120px rgba(0,0,0,0.4);
+    pointer-events:none;
+}
+
+/* Main fade transition */
+#mainContent{
+    transition:0.6s;
+}
+
+h1{ 
+    margin-top:40px; 
+    font-size:28px; 
+}
+
+.card{
+    width:85%;
+    max-width:500px;
+    margin:20px auto;
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+
+.countdown{ 
+    font-size:20px; 
+    margin-top:10px; 
+    font-weight:bold; 
+}
+
+button{
+    padding:14px 30px;
+    font-size:16px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff4d6d;
+    cursor:pointer;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+button:disabled{
+    background:gray;
+    color:white;
+    cursor:not-allowed;
+}
+
+#wishScreen{
+    display:none;
+    margin-top:40px;
+}
+
+#wishText{
+    font-size:26px;
+    max-width:90%;
+    margin:auto;
+    min-height:80px;
+    white-space:pre-line;
+}
+
+/* ========================= */
+/*        PHOTO CIRCLE       */
+/* ========================= */
+
+.wrapper{
+    position: relative;
+    width: 90vw;  
+    height: 90vw; 
+    max-width: 600px; 
+    max-height: 600px;
+    margin:40px auto;
+    display:none;
+    overflow:hidden;
+
+    opacity:0;
+    transform:scale(0.9);
+    transition:1s ease;
+}
+
+.wrapper.show{
+    opacity:1;
+    transform:scale(1);
+}
+
+.circle{
+    position:absolute;
+    width:100%;
+    height:100%;
+    animation: rotate 70s linear infinite;
+    transform-style:preserve-3d;
+}
+
+/* Outer glowing ring */
+.wrapper::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.3);
+    box-shadow:0 0 30px rgba(255,105,180,0.6);
+    animation:ringPulse 4s ease-in-out infinite;
+}
+
+@keyframes ringPulse{
+    0%,100%{opacity:0.6;}
+    50%{opacity:1;}
+}
+
+/* Photos */
+.circle img {
+    position: absolute;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0;
+
+    box-shadow: 0 0 12px rgba(255,255,255,0.6);
+}
+
+/* Subtle glow pulse */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    50% {
+        box-shadow: 0 0 22px rgba(255,105,180,0.8);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+}
+
+/* Rotation */
+@keyframes rotate{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+}
+
+@keyframes counterRotate{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(-360deg); }
+}
+
+/* Center Text Glass Aesthetic */
+.center-name{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size: clamp(20px, 5vw, 38px);
+    font-weight:bold;
+    font-family: 'Pacifico', cursive;
+    text-align:center;
+    max-width:80%;
+    color:#fff;
+
+    padding:15px 25px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(1px);
+
+    text-shadow:0 0 8px rgba(255,105,180,0.6);
+}
+
+/* Fly-in animation */
+@keyframes flyIn {
+    0%{
+        transform: scale(0.3) translateY(40px);
+        opacity:0;
+    }
+    60%{
+        transform: scale(1.1) translateY(-5px);
+        opacity:1;
+    }
+    100%{
+        transform: scale(1) translateY(0);
+        opacity:1;
+    }
+}
+
+/* ===== CINEMATIC INTRO ===== */
+
+/* ===== ADVANCED CINEMATIC INTRO ===== */
+
+#intro{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    overflow:hidden;
+    transition:1.5s ease;
+}
+
+.intro-sequence{
+    text-align:center;
+}
+
+.intro-line{
+    color:white;
+    font-size: clamp(24px, 5vw, 48px);
+    font-family:'Pacifico', cursive;
+    letter-spacing:3px;
+    opacity:0;
+}
+
+.final-line{
+    font-size: clamp(30px, 6vw, 55px);
+}
+</style>
+</head>
+<body>
+<div id="intro">
+    <div class="intro-sequence">
+        <p class="intro-line">She is good friend.</p>
+        <p class="intro-line">She is magic.</p>
+         <p class="intro-line">She is unforgettable.</p>
+        <p class="intro-line final-line">Su jove che tane j kav chu.</p>
+    </div>
+</div>
+<div id="mainContent">
+    <h1>🎉 Hey Bestie! Something Special Is Coming...</h1>
+
+    <div class="card">
+    This page is specially made for the most crazy,
+    fun and irreplaceable best friend 💙 <br><br>
+    28 February is loading...
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+
+    <button id="btn" disabled>Surprise Locked 🔒</button>
+</div>
+
+<div id="wishScreen">
+    <h2 id="wishText"></h2>
+</div>
+
+<div class="wrapper" id="wrapper">
+    <div class="circle">
+        <img src="photo1.jpeg">
+        <img src="photo2.jpeg">
+        <img src="photo3.jpeg">
+        <img src="photo4.jpeg">
+        <img src="photo5.jpeg">
+        <img src="photo6.jpeg">
+        <img src="photo7.jpeg">
+        <img src="photo8.jpeg">
+    </div>
+    <div class="center-name">Happy Birthday Bantu 🎉</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+
+// Pro dynamic cinematic intro
+window.addEventListener("load", ()=>{
+
+    const lines = document.querySelectorAll(".intro-line");
+    const intro = document.getElementById("intro");
+
+    lines.forEach((line, index)=>{
+
+        setTimeout(()=>{
+            line.style.opacity = "1";
+            line.style.transition = "1.5s ease";
+
+            // If final line → zoom effect
+            if(line.classList.contains("final-line")){
+                line.style.transform = "scale(1.1)";
+            }
+
+        }, 800 + (index * 1500));
+
+    });
+
+    // Total animation time calculation
+    const totalTime = 800 + (lines.length * 1500);
+
+    // Fade out intro
+    setTimeout(()=>{
+        intro.style.opacity = "0";
+    }, totalTime + 1000);
+
+    // Remove intro completely
+    setTimeout(()=>{
+        intro.style.display = "none";
+    }, totalTime + 2500);
+
+});
+// Countdown
+const now = new Date();
+let year = now.getFullYear();
+let birthday = new Date(year, 1, 22);
+if(now > birthday){ birthday = new Date(year+1, 1, 22); }
+
+function updateCountdown(){
+    const current = new Date();
+    const diff = birthday - current;
+
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60))%24);
+    const minutes = Math.floor((diff/(1000*60))%60);
+    const seconds = Math.floor((diff/1000)%60);
+
+    document.getElementById("countdown").innerHTML =
+        "⏳ Only "+days+"d "+hours+"h "+minutes+"m "+seconds+"s left!";
+
+    if(current.getDate()===28 && current.getMonth()===1){
+        document.getElementById("btn").disabled=false;
+        document.getElementById("btn").innerText="Click For Surprise 🎁";
+    }
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+
+// Typing Effect
+function typeEffect(element, text, speed, callback){
+    element.innerHTML="";
+    let i=0;
+    function typing(){
+        if(i<text.length){
+            element.innerHTML+=text.charAt(i);
+            i++;
+            setTimeout(typing,speed);
+        } else {
+            if(callback) callback();
+        }
+    }
+    typing();
+}
+
+// Fireworks
+function startFireworks(){
+    setInterval(()=>{
+        confetti({
+            particleCount:6,
+            spread:70,
+            origin:{x:Math.random()}
+        });
+    },200);
+}
+
+// Show Photos in Circle
+function showPhotos(){
+    const wrapper = document.getElementById("wrapper");
+    wrapper.style.display = "block";
+
+    setTimeout(()=>{
+        wrapper.classList.add("show");
+    },50);
+
+    const images = document.querySelectorAll(".circle img");
+    const size = wrapper.offsetWidth;
+    const center = size / 2;
+    const radius = center * 0.75;
+
+    images.forEach((img, index) => {
+        const imgSize = size * 0.22;
+        img.style.width = img.style.height = imgSize + "px";
+
+        const angle = (index / images.length) * 2 * Math.PI;
+        const x = center + radius * Math.cos(angle) - imgSize / 2;
+        const y = center + radius * Math.sin(angle) - imgSize / 2;
+
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+
+        // Staggered fly-in
+        setTimeout(()=>{
+            img.style.animation = "flyIn 0.8s ease forwards";
+        }, index * 200);
+    });
+
+    // After all images appear → start rotation
+    setTimeout(()=>{
+        document.querySelector(".circle").style.animation = "rotate 70s linear infinite";
+        images.forEach(img=>{
+            img.style.animation += ", counterRotate 70s linear infinite, glowPulse 4s ease-in-out infinite";
+        });
+    }, images.length * 200 + 800);
+}
+
+// Button Click
+document.getElementById("btn").addEventListener("click",function(){
+
+    document.getElementById("mainContent").style.opacity="0";
+
+    setTimeout(()=>{
+        document.getElementById("mainContent").style.display="none";
+    },600);
+
+    const wishScreen=document.getElementById("wishScreen");
+    const wishText=document.getElementById("wishText");
+    wishScreen.style.display="block";
+
+    startFireworks();
+
+    typeEffect(
+        wishText,
+        `This is for you from my side 👑
+
+You are one of the most special people in my life.
+Your smile makes everything brighter ✨
+Stay strong and keep shining 💖`,
+        50,
+        ()=>{ showPhotos(); }
+    );
+});
+
+</script>
+
+</body>
+</html> 
