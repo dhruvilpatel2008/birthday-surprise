@@ -359,52 +359,38 @@ window.addEventListener("load", ()=>{
     }, totalTime + 2500);
 
 });
-// ===== Detailed Countdown + Age Line =====
-
-const birthDay = 28;
-const birthMonth = 1; // February (0 = Jan)
-const birthYear = 2007;
+// FIXED TARGET DATE (28 Feb 2026)
+const targetDate = new Date("February 28, 2026 00:00:00");
 
 function updateCountdown(){
 
     const now = new Date();
-    let currentYear = now.getFullYear();
+    const diff = targetDate - now;
 
-    let nextBirthday = new Date(currentYear, birthMonth, birthDay);
+    const countdownEl = document.getElementById("countdown");
 
-    // If birthday already passed this year → next year
-    if(now > nextBirthday){
-        nextBirthday = new Date(currentYear + 1, birthMonth, birthDay);
+    if(diff <= 0){
+        countdownEl.innerHTML =
+            `🎉 Happy Birthday! 🎂 She is now ${2026 - birthYear} years old!`;
+
+        document.getElementById("btn").disabled = false;
+        document.getElementById("btn").innerText = "Open Surprise 🎁";
+        return;
     }
-
-    const diff = nextBirthday - now;
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    const countdownEl = document.getElementById("countdown");
-
-    // Age calculation
-    const age = nextBirthday.getFullYear() - birthYear;
-
-    if(diff <= 0){
-        countdownEl.innerHTML =
-            `🎉 Happy Birthday! <br>
-             🎂 She is now ${age} years old!`;
-        return;
-    }
-
     countdownEl.innerHTML =
         `⏳ ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds left! 
          <br>
-         🎂 you will turn ${age} this year!`;
+         🎂 She will turn ${2026 - birthYear}!`;
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
-
 
 // Typing Effect
 function typeEffect(element, text, speed, callback){
