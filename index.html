@@ -276,13 +276,50 @@ button:disabled{
     font-size: clamp(30px, 6vw, 55px);
 }
 
+/* ================= MEMORY ANIMATION ================= */
 
+#memorySection{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.memory-box{
+    text-align:center;
+}
+
+.memory-box img{
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    object-fit:cover;
+    opacity:0;
+    transform:scale(0.7);
+    box-shadow:0 0 30px rgba(255,105,180,0.6);
+    transition:0.6s ease;
+}
+
+.memory-text{
+    margin-top:25px;
+    font-size:22px;
+    font-family:'Pacifico', cursive;
+    opacity:0;
+    padding:0 20px;
+    transition:0.6s ease;
+}
 </style>
 </head>
 <body>
 <div id="intro">
     <div class="intro-sequence">
-        <p class="intro-line">She is good friend.</p>
+        <p class="intro-line">She is not just a friend… she is a blessing.</p>
         <p class="intro-line">She is magic.</p>
          <p class="intro-line">She is unforgettable.</p>
         <p class="intro-line final-line">Su jove che tane j kav chu.</p>
@@ -301,7 +338,12 @@ button:disabled{
 
     <button id="btn" disabled>Surprise Locked 🔒</button>
 </div>
-
+<div id="memorySection" style="display:none;">
+    <div class="memory-box">
+        <img id="memoryImg" src="">
+        <div id="memoryText" class="memory-text"></div>
+    </div>
+</div>
 <div id="wishScreen">
     <h2 id="wishText"></h2>
 </div>
@@ -361,7 +403,7 @@ window.addEventListener("load", ()=>{
 });
 // ===== FIXED COUNTDOWN TO 28 FEB 2026 =====
 
-const targetDate = new Date("2026-02-28T00:00:00");
+const targetDate = new Date("2026-02-23T00:00:00");
 
 function updateCountdown() {
 
@@ -461,31 +503,88 @@ function showPhotos(){
     }, images.length * 200 + 800);
 }
 
-// Button Click
+// ================= MEMORY DATA =================
+
+const memories = [
+    { img: "m1.jpeg", text: "This day meant more than you know." },
+    { img: "m2.jpeg", text: "Your smile changed everything." },
+    { img: "m3.jpeg", text: "With you, moments feel lighter." },
+    { img: "m4.jpeg", text: "Some memories stay forever." },
+    { img: "m5.jpeg", text: "This one is close to my heart." },
+    { img: "m6.jpeg", text: "You make life beautiful." },
+    { img: "m7.jpeg", text: "Every laugh matters." },
+    { img: "m8.jpeg", text: "You are my comfort place." },
+    { img: "m9.jpeg", text: "This was pure happiness." },
+    { img: "m10.jpeg", text: "Unforgettable." },
+    { img: "m11.jpeg", text: "Always special." },
+    { img: "m12.jpeg", text: "And today… it’s all about you." }
+];
+
+function startMemories(callback){
+
+    const section = document.getElementById("memorySection");
+    const img = document.getElementById("memoryImg");
+    const text = document.getElementById("memoryText");
+
+    section.style.display = "flex";
+
+    let index = 0;
+
+    function showNext(){
+
+        if(index >= memories.length){
+            section.style.display = "none";
+            callback();
+            return;
+        }
+
+        img.style.opacity = "0";
+        text.style.opacity = "0";
+        img.style.transform = "scale(0.7)";
+
+        setTimeout(()=>{
+
+            img.src = memories[index].img;
+            text.innerText = memories[index].text;
+
+            img.style.opacity = "1";
+            img.style.transform = "scale(1)";
+            text.style.opacity = "1";
+
+        },300);
+
+        index++;
+
+        setTimeout(showNext, 3500);
+    }
+
+    showNext();
+}
 document.getElementById("btn").addEventListener("click",function(){
 
-    document.getElementById("mainContent").style.opacity="0";
+    document.getElementById("mainContent").style.display="none";
 
-    setTimeout(()=>{
-        document.getElementById("mainContent").style.display="none";
-    },600);
+    startMemories(()=>{
 
-    const wishScreen=document.getElementById("wishScreen");
-    const wishText=document.getElementById("wishText");
-    wishScreen.style.display="block";
+        const wishScreen=document.getElementById("wishScreen");
+        const wishText=document.getElementById("wishText");
 
-    startFireworks();
+        wishScreen.style.display="block";
+        startFireworks();
 
-    typeEffect(
-        wishText,
-        `This is for you from my side 👑
+        typeEffect(
+            wishText,
+            `This is for you from my side 👑
 
 You are one of the most special people in my life.
 Your smile makes everything brighter ✨
 Stay strong and keep shining 💖`,
-        50,
-        ()=>{ showPhotos(); }
-    );
+            50,
+            ()=>{ showPhotos(); }
+        );
+
+    });
+
 });
 
 </script>
