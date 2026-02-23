@@ -359,19 +359,20 @@ window.addEventListener("load", ()=>{
     }, totalTime + 2500);
 
 });
-// FIXED TARGET DATE (28 Feb 2026)
-const targetDate = new Date("February 28, 2026 00:00:00");
+// ===== FIXED COUNTDOWN TO 28 FEB 2026 =====
 
-function updateCountdown(){
+const targetDate = new Date("2026-02-28T00:00:00");
+
+function updateCountdown() {
 
     const now = new Date();
     const diff = targetDate - now;
 
     const countdownEl = document.getElementById("countdown");
 
-    if(diff <= 0){
+    if (diff <= 0) {
         countdownEl.innerHTML =
-            `🎉 Happy Birthday! 🎂 She is now ${2026 - birthYear} years old!`;
+            `🎉 Happy Birthday! 🎂`;
 
         document.getElementById("btn").disabled = false;
         document.getElementById("btn").innerText = "Open Surprise 🎁";
@@ -384,9 +385,10 @@ function updateCountdown(){
     const seconds = Math.floor((diff / 1000) % 60);
 
     countdownEl.innerHTML =
-        `⏳ ${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds left! 
-         <br>
-         🎂 She will turn ${2026 - birthYear}!`;
+        `⏳ ${days} Days 
+         ${hours} Hours 
+         ${minutes} Minutes 
+         ${seconds} Seconds left!`;
 }
 
 setInterval(updateCountdown, 1000);
